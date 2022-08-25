@@ -31,4 +31,4 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: priyansh05/shadow:latest
+          tags: shadowacolyte/shadow-bot:latest

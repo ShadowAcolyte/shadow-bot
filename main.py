@@ -24,6 +24,7 @@ async def on_message(message: discord.Message):
     # good bot messages
     if message.content.lower().startswith("good bot") and message.reference.cached_message.author.id == bot.user.id:
         await message.reply("Thanks! ≧◡≦")
+    # bad bot messages
     if message.content.lower().startswith("bad bot") and message.reference.cached_message.author.id == bot.user.id:
         await message.reply("Sowwy! o(╥﹏╥)~")
 

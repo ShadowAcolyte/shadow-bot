@@ -35,7 +35,7 @@ async def on_ready():
 async def on_command_error(ctx: commands.Context, error):
     error = getattr(error, "original", error)
     if isinstance(error, commands.CommandNotFound):
-        await ctx.reply(f"Command {ctx.command} does not exist.")
+        await ctx.reply(f"Command {ctx.invoked_with} does not exist.")
     output = "".join(traceback.format_exception(error))
     await util.log.err(output)
     print(output)

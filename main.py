@@ -6,13 +6,15 @@ from discord.ext import commands
 
 intents = discord.Intents.all()
 
-bot = commands.AutoShardedBot(command_prefix=os.getenv("BOT_PREFIX"), intents=intents)
+bot = commands.AutoShardedBot(
+    command_prefix=os.getenv("BOT_PREFIX", "$"), intents=intents
+)
 
 
 @bot.listen("on_ready")
 async def on_ready():
     await util.log.info("Shadow bot v0.3 is now online!")
-    await util.log.info(f"Using prefix {os.getenv('BOT_PREFIX')}")
+    await util.log.info(f"Using prefix {os.getenv('BOT_PREFIX', '$')}")
 
     # load cogs
     for filename in os.listdir("cogs"):

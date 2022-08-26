@@ -34,17 +34,17 @@ async def on_message(message: discord.Message):
         await message.reply("Sowwy! o(╥﹏╥)~")
 
 @bot.command()
-async def say(ctx: commands.Context, *, arg: str, allowed_mentions=discord.AllowedMentions(everyone=False)):
+async def say(ctx: commands.Context, *, arg: str):
     await ctx.message.delete()
+    everyone = ctx.channel.permissions_for(ctx.author).mention_everyone
     if ctx.message.reference is None:
-        await ctx.send(arg)
+        await ctx.send(arg, allowed_mentions=discord.AllowedMentions(everyone=everyone))
     else:
         ref_message: discord.Message = await get_message_reference(ctx.message)
-        await ref_message.reply(arg)
+        await ref_message.reply(arg, allowed_mentions=discord.AllowedMentions(everyone=everyone))
 
 @bot.command()
 async def exec(ctx: commands.Context, *, arg: str):
     await ctx.message.delete()
-    
 
 bot.run(os.environ['DISCORD_TOKEN'])

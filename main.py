@@ -9,6 +9,7 @@ intents = discord.Intents.all()
 bot = commands.AutoShardedBot(
     command_prefix=os.getenv("BOT_PREFIX", "$"), intents=intents
 )
+bot.owner_id = int(os.getenv("BOT_OWNER_ID"))
 
 
 @bot.listen("on_ready")
@@ -35,7 +36,7 @@ async def on_ready():
 async def on_command_error(ctx: commands.Context, error):
     error = getattr(error, "original", error)
     if isinstance(error, commands.CommandNotFound):
-        await ctx.reply(f"Command {ctx.invoked_with} does not exist.")
+        await ctx.reply(f"Command `{ctx.invoked_with}` does not exist.")
     output = "".join(traceback.format_exception(error))
     await util.log.err(output)
     print(output)

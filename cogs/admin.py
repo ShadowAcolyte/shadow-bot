@@ -48,7 +48,6 @@ class Admin(commands.Cog):
     async def sh(
         self,
         ctx: commands.Context,
-        user: discord.Member,
         *,
         cmd=""
     ):

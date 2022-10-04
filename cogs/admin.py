@@ -48,8 +48,7 @@ class Admin(commands.Cog):
     async def sh(
         self,
         ctx: commands.Context,
-        *,
-        cmd=""
+        *cmd
     ):
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
         await ctx.send(result.stdout.decode('utf-8'))

